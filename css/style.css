@@ -1,0 +1,237 @@
+* {
+	margin: 0;
+}
+html, body { 	
+	background: url(../img/bgpattern.png) repeat; 
+	font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	font-size: 12px; 
+	color: DarkGray;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+
+.container { 
+	position:relative; 
+	min-width:970px; 
+	min-height:100%; 
+	background:url(../img/header_bg.jpg) repeat-x;
+}
+
+.alogin { 
+	background:url(../img/pc_header.jpg) repeat-x;
+}
+
+.content { 
+	padding-bottom:0px; 
+	min-height:100%
+}
+
+.content_detail {
+	margin-top:12px; 
+	float:left; 
+	width:100%;
+}
+
+.wrapper {
+	width: 970px;
+	height: auto !important;
+	margin: 0 auto -2em;
+	position:relative;
+}
+.content_detail {margin-top:12px; float:left; width:100%;}
+
+.inputarea {border-top:1px solid #a5acb2;border-left:1px solid #a5acb2;border-right:1px solid #d6d7d8;border-bottom:1px solid #d6d7d8;background-color:#fafafa; padding:4px;}
+
+/* --- header --- */
+
+.header_top {height:60px;}
+
+.header .logo { float:left; margin:14px 10px 0px 0px;}
+.header .logo img { width:132px; height:38px; }
+
+
+.login a.create_account , .welcome_meun a.useremail, .welcome_meun a.video_num{ color:#00CCFF; text-decoration:underline;}
+
+.logout_panel { 
+	float:right; 
+	margin:26px 0px 0px; 
+	width:330px;
+}
+.logout_panel .cp_word, .cp_word .logout {color:#bfbebe;}
+.logout_panel .welcome_meun { color:#e0e0e0; float:right;padding-bottom:4px}
+
+.welcome_meun_r {color:#fff}
+
+.btn_clicked { color:#000000;}
+.meun {height:36px; float:left; padding-top:20px; padding-left:150px;}
+.meun button { margin-left: 10px; }
+
+
+.footer, div.footer a, .push {
+	height: 2em;
+	text-align: center;
+	color: #000;
+	text-shadow: 0px 1px 1px #707070;
+}
+img {  
+	border-style: none;
+}
+
+
+
+
+a:link, a:visited { 
+	text-decoration:none;
+	color: DarkGray;
+}
+a:active, a:active img { 
+	outline: none;
+	border: none;
+}
+
+h2 {
+	clear: left;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+
+ 
+
+
+
+/* Upload */
+
+#upload-tabs {
+	width: 550px;
+}
+
+
+
+
+
+
+
+
+
+
+/** 
+  page Admin 
+ 
+  */
+  
+.clear {
+	clear: left;
+}
+.hidden {
+	display: none;
+}
+.auth-notification {
+	float: left;
+	padding-top: 7px;
+	padding-right: 20px;
+}
+
+div.title { float: left; width: 300px; color: #8a8a8a; padding-left: 5px; }
+div.progress { float: left; width: 140px; color: #8a8a8a; padding-left: 5px; padding-top: 3px; }
+div.delete { float: left; padding-left: 3px; }
+div.showlink { float: left; padding-left: 5px; }
+div.play { float:left; padding-left: 3px; }
+div.save { float:left; padding-left: 3px; }
+div.linkdisplay { clear:left; padding-left: 5px; padding-top: 3px; }
+
+.form-field { padding-top: 10px; }
+.form-field input { float: left; margin-right: 3px; clear: both; }
+.form-field label { float: left; margin-right: 10px;}
+.form-field button { float: right; margin-top: 20px;}
+
+.deletebutton { display: block; width:16px; height:16px; background-image:url('b_drop.png'); background-repeat: no-repeat; }
+.deletebutton  span { display: none; }
+.playbutton { display: block; width:18px; height:17px; background-image:url('VLC.png'); background-repeat: no-repeat; }
+.playbutton  span { display: none; }
+.savebutton { display: block; width:16px; height:16px; background-image:url('download.png'); background-repeat: no-repeat; }
+.savebutton  span { display: none; }
+
+.linkdisplay div {
+	float: left;
+	clear: left;
+	margin: 5px;
+}
+.linkdisplay textarea, input {
+	font-size: 11px;
+	margin-bottom: 10px; 
+}
+
+.addupload p label {
+	display: block;
+	float: left;
+	width: 80px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	text-align: right;
+}
+#upload-tabs {
+	margin-bottom: 20px;
+}
+
+.filemeta {
+	margin: 10px 0px 10px 10px;;
+}
+
+#paidcontentdetails {
+	display:none;
+}
+
+.meta-fields p { width: 100%; margin: 10px auto; padding: 0; overflow: hidden; }
+.meta-fields p label { display: block; float: left; width: 80px; margin: 0 10px 0 0; padding: 0; text-align: right; }
+.meta-fields p span { display: block; float: left; margin: 0 10px 0 0; padding: 0; }
+
+.example {
+	font-family: sans-serif, Helvetica, Arial;
+	font-weight: normal; color: #AAAAAA; font-size: 11px;
+	margin: 0px 90px;
+	line-height: 19px;
+}
+
+
+#mainleftcolumn {
+	float: left;
+	width: 530px;
+}
+#mainrightcolumn {
+	float: right;
+	margin-top: 30px;
+}
+
+
+#uploadslistnavigation {
+	clear: left;
+}
+#uploadslistnext a {
+	float: right;
+	padding-right: 50px;
+}
+#uploadslistprevious a {
+	float: left;
+	padding-left: 10px;
+}
+#uploadslistnext a, #uploadslistprevious a {
+	color: #fff;
+}
+
+#uploadviewsstatistics {
+	margin-bottom: 10px;
+}
+
+label { display:block; }
+input.text { margin-bottom:12px; width:95%; padding: .4em; }
+fieldset { padding:0; border:0; margin-top:25px; }
+.ui-dialog .ui-state-error { padding: .3em; }
+.validateTips { border: 1px solid transparent; padding: 0.3em; }
+		
+/**
+  end page Admin 
+  
+  */
