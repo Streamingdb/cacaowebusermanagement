@@ -6,9 +6,15 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 	<link rel="stylesheet" href="css/style.css" />
 	<link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.8.17.custom.css" />
+	<link rel="stylesheet" href="css/ui.jqgrid.css" />
+	
+	<script src="js/jquery-1.7.1.min.js"></script>
+	<script src="js/jquery-ui-1.8.17.custom.min.js"></script>
+	<script src="js/jquery.progressbar.min.js"></script>
+	<script src="js/grid.locale-en.js"></script>
+	<script src="js/jquery.jqGrid.min.js"></script>
 </head>
 <body>
-
 
 	<noscript>This page will NOT work because Javascript is not enabled</noscript>
 		
@@ -32,7 +38,7 @@
 						<button id="dashboardtab_btn">Dashboard</button>
 						<button id="uploadtab_btn">Upload</button>
 						<button id="redeemtab_btn">Redeem</button>
-						<button id="earningtab_btn">Earnings</button>
+						<button id="earningstab_btn">Earnings</button>
 						<button id="statisticstab_btn">Statistics</button>
 						<button id="videomanagertab_btn">Video Manager</button>
 					</div>
@@ -40,8 +46,69 @@
 				</div>
 				
 				<div id="dashboard">
-				
+					<div class="authbox" style="display:none">
+						<div class="auth-notification"></div>
+						<div id="buycredits-form" class="buycredits hidden">
+							<form action="https://www.paypal.com/cgi-bin/webscr" id="depositform" method="post">
+								<div class="form-field clear">
+									<p id="numberofcreditstobuy"></p>
+								</div>
+								<div class="form-field clear">
+									<input name="form[radio]" id="radio1" class="radio" type="radio" value="50" checked="true"><label for="radio1">50 credits = 5€</label>
+									<input name="form[radio]" id="radio2" class="radio" type="radio" value="150"><label for="radio2">150 credits = 10€</label>
+									<input name="form[radio]" id="radio3" class="radio" type="radio" value="400"><label for="radio3">400 credits = 20€</label>
+									<div class="clear">
+										<button name="submit" type="submit" id="submitpaypal"></button>
+									</div>	
+								</div><!-- /.form-field -->		
+									
+
+
+								<div id="paypalcart">
+									<input name="cmd" value="_cart" type="hidden">
+									<input name="upload" value="1" type="hidden">
+									<input name="business" value="contact@cacaoweb.org" type="hidden">
+									<input name="currency_code" value="EUR" type="hidden">
+									<input name="cpp_header_image" value="http://cacaoweb.org/images/logonew.png" type="hidden">
+									<input name="item_name_1" value="50 Credits" type="hidden">
+									<input name="quantity_1" value="1" type="hidden">
+									<input name="amount_1" value="5" type="hidden">
+								</div>							
+							
+							</form>
+						</div>
+						<div class="auth-buttons">
+							<button onclick="javascript:login()" id="loginbtn"></button>
+							<button onclick="javascript:register()" id="createbtn"></button>
+						</div>
+						<div id="login-form" title="Login">
+							<p id="validateTipsLogin"></p>
+							<form>
+							<fieldset>
+								<label for="name"></label>
+								<input type="text" name="name" id="loginname" class="text ui-widget-content ui-corner-all" />
+								<label for="password"></label>
+								<input type="password" id="loginpassword" value="" class="text ui-widget-content ui-corner-all" />
+							</fieldset>
+							</form>
+						</div>
+						<div id="createuser-form" title="">
+							<p class="validateTips"></p>
+							<form>
+							<fieldset>
+								<label for="name"></label>
+								<input type="text" name="name" id="registername" class="text ui-widget-content ui-corner-all" />
+								<label for="password"></label>
+								<input type="password" name="password" id="registerpassword" value="" class="text ui-widget-content ui-corner-all" />
+								<label for="email">Email</label>
+								<input type="email" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" placeholder="optional email address"/>
+							</fieldset>
+							</form>
+						</div>
+					</div>
 				</div>
+				
+				
 				
 				<div id="upload" style="display:none">
 				
@@ -101,7 +168,7 @@
 									<input name="url" id="url" size="50"></input>
 								</p>
 								<p>
-									<small><div id="examplesupload"></div><br>http://megavideo.com/?v=TUF78DFD<br>http://www.videobb.com/video/uGR5SO24apvI<br>http://www.videozer.com/video/6Fnpr<br>http://myspace.someserver.com/myvideo.mp4</small>
+									<small><div id="examplesupload"></div>http://www.videobb.com/video/uGR5SO24apvI<br>http://www.videozer.com/video/6Fnpr<br>http://myspace.someserver.com/myvideo.mp4</small>
 								</p>
 							</div>
 						</div>
@@ -230,67 +297,13 @@
 				
 				</div>
 				
+				
+				
+				<!--- Video Manager --->
 				<div id="videomanager" style="display:none">
-					<div class="authbox" style="display:none">
-						<div class="auth-notification"></div>
-						<div id="buycredits-form" class="buycredits hidden">
-							<form action="https://www.paypal.com/cgi-bin/webscr" id="depositform" method="post">
-								<div class="form-field clear">
-									<p id="numberofcreditstobuy"></p>
-								</div>
-								<div class="form-field clear">
-									<input name="form[radio]" id="radio1" class="radio" type="radio" value="50" checked="true"><label for="radio1">50 credits = 5€</label>
-									<input name="form[radio]" id="radio2" class="radio" type="radio" value="150"><label for="radio2">150 credits = 10€</label>
-									<input name="form[radio]" id="radio3" class="radio" type="radio" value="400"><label for="radio3">400 credits = 20€</label>
-									<div class="clear">
-										<button name="submit" type="submit" id="submitpaypal"></button>
-									</div>	
-								</div><!-- /.form-field -->		
-									
-
-
-								<div id="paypalcart">
-									<input name="cmd" value="_cart" type="hidden">
-									<input name="upload" value="1" type="hidden">
-									<input name="business" value="contact@cacaoweb.org" type="hidden">
-									<input name="currency_code" value="EUR" type="hidden">
-									<input name="cpp_header_image" value="http://cacaoweb.org/images/logonew.png" type="hidden">
-									<input name="item_name_1" value="50 Credits" type="hidden">
-									<input name="quantity_1" value="1" type="hidden">
-									<input name="amount_1" value="5" type="hidden">
-								</div>							
-							
-							</form>
-						</div>
-						<div class="auth-buttons">
-							<button onclick="javascript:login()" id="loginbtn"></button>
-							<button onclick="javascript:register()" id="createbtn"></button>
-						</div>
-						<div id="login-form" title="Login">
-							<p id="validateTipsLogin"></p>
-							<form>
-							<fieldset>
-								<label for="name"></label>
-								<input type="text" name="name" id="loginname" class="text ui-widget-content ui-corner-all" />
-								<label for="password"></label>
-								<input type="password" id="loginpassword" value="" class="text ui-widget-content ui-corner-all" />
-							</fieldset>
-							</form>
-						</div>
-						<div id="createuser-form" title="">
-							<p class="validateTips"></p>
-							<form>
-							<fieldset>
-								<label for="name"></label>
-								<input type="text" name="name" id="registername" class="text ui-widget-content ui-corner-all" />
-								<label for="password"></label>
-								<input type="password" name="password" id="registerpassword" value="" class="text ui-widget-content ui-corner-all" />
-								<label for="email">Email</label>
-								<input type="email" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" placeholder="optional email address"/>
-							</fieldset>
-							</form>
-						</div>
-					</div>
+				
+					<table id="list1"></table>
+					<div id="pager1"></div>
 					
 					<div id="downloads">
 						<h2 id="h2mydownloads"></h2>
@@ -311,7 +324,11 @@
 					
 
 				</div>
-				</div>
+				<!--- End Video Manager --->
+				
+				
+				
+			</div>
 				
 				
 		
@@ -392,9 +409,33 @@
 			
 	</script>
 	
-	<script src="js/jquery-1.7.1.min.js"></script>
-	<script src="js/jquery-ui-1.8.17.custom.min.js"></script>
-	<script src="js/jquery.progressbar.min.js"></script>
+
+	<script type="text/javascript"> 
+		jQuery().ready(function (){
+			jQuery("#list1").jqGrid({
+				url:'server.php?q=1',
+				datatype: "xml",
+				colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+				colModel:[
+					{name:'id',index:'id', width:75},
+					{name:'invdate',index:'invdate', width:90},
+					{name:'name',index:'name', width:100},
+					{name:'amount',index:'amount', width:80, align:"right"},
+					{name:'tax',index:'tax', width:80, align:"right"},		
+					{name:'total',index:'total', width:80,align:"right"},		
+					{name:'note',index:'note', width:150, sortable:false}		
+				],
+				rowNum:10,
+				autowidth: true,
+				rowList:[10,20,30],
+				pager: jQuery('#pager1'),
+				sortname: 'id',
+				viewrecords: true,
+				sortorder: "desc",
+				caption:"XML Example"
+			}).navGrid('#pager1',{edit:false,add:false,del:false});
+		});
+	</script> 
 
 	<script>
 		$("label[for=name]").text(langstrings[lang]['name']);
@@ -427,20 +468,6 @@
 			});
 		}		
 		
-		function quit() {
-			$.ajax({
-				url: "exit.html",
-				success: function() {}
-			});
-			alert(langstrings[lang]['turnedoff']);
-		}
-		function uninstall() {
-			$.ajax({
-				url: "uninstall.html",
-				success: function() {}
-			});
-			alert(langstrings[lang]['uninstalled']);
-		}
 
 	
 
@@ -464,116 +491,7 @@
 			});
 		}
 
-		function parseXMLdownloads(xml) {
-			var isplayerinstalled = false;
-			$(xml).find("playerinstalled").each(function() {
-				isplayerinstalled = ($(this).text() == 'true');
-			});
-			
-			var downloads = Array();
-			var filedownloads = Array();
-			// on ajoute les éléments dans les tableaux megavideodownloads et filedownloads
-			$(xml).find("downloaditem").each(function() {
-				var item = {'provider': $(this).find("provider").text(), 
-							'videoid': $(this).find("videoid").text(), 
-							'length': Math.floor($(this).find("length").text() / 1000000) + " Mo",
-							'progress': $(this).find("progress").text(),
-							'title': $(this).find("title").text() };
-				downloads.push(item);
-			});
-			$(xml).find("fileitem").each(function() {
-				var item = {'fileid': $(this).find("fileid").text(), 
-							'length': Math.floor($(this).find("length").text() / 1000000) + " Mo",
-							'progress': $(this).find("progress").text(),
-							'title': $(this).find("title").text() };
-				filedownloads.push(item);
-			});	
-			
-			// on retire les lignes de l'interface dont l'élément correspondant a disparu
-			$('div[rowdownid]').each(function() {
-				var id = $(this).attr('rowdownid');
-				
-				var b = false;
-				$.each(downloads, function (i, megavideoitem) {
-					if (megavideoitem.videoid == id) {
-						b = true;
-					}
-				});
-				$.each(filedownloads, function (i, fileitem) {
-					if (fileitem.fileid == id) {
-						b = true;
-					}
-				});
-				if(!b) {
-					$(this).remove();
-				}
-			});
-			
-			
-			$.each(filedownloads, function (i, item) {
-				if ($("div[rowdownid=" + item.fileid + "]").length > 0) {
-					$("div[rowdownid=" + item.fileid + "]").find(".downloadprogressbar").progressBar(item.progress);
-				} else {
-					var rowtitle = '<div class="title">' + item.title + '</div>';
-					var rowprogress = '<div class="progress"><div class="downloadprogressbar"></div></div>';
-					var rowdelete = "<div class='delete'><a class='deletebutton' href='#' title='delete' onclick=\"deleteFileDownload('" + item.fileid + "')\"><span>delete</span></a></div>";
-					var downloadurl = "file/download.caml?downloadid=" + item.fileid;
-					var rowdownload = "<div class='save'><a class='savebutton' title='download' href=\"" + downloadurl + "\"><span>save</span></a></div>";
-					var vlcplayback = "";
-					if (isplayerinstalled) { 
-						vlcplayback = "<div class='play'><a class='playbutton' title='play' href='#' onclick=\"ajaxrequest('play.caml?playurl=http://" + window.location.host + "/?f=" + item.fileid + "')\"><span>play</span></a></div>";
-					} 
-					var link = "http://127.0.0.1:4001/?f=" + item.fileid;
-					var rowlinks = "<div class='linkdisplay' style='display:none'><input name=\"link\" id=\"link\" value=\"" + link + "\" size=\"80\"></input></div>";
-					var showlink = "<div class='showlink'><a href='#' onclick=\"toggleLink(event, this)\"><span>" + langstrings[lang]['showlink'] + "</span></a></div>";
-					var div = document.createElement("div"); // obligé de créer un objet dans le DOM pour que la progressbar fonctionne
-					div.className = "row";
-					div.setAttribute('rowdownid', item.fileid);
-					div.setAttribute("colspan", "4");
-					div.innerHTML = rowtitle + rowprogress + rowdelete + vlcplayback + rowdownload + showlink + rowlinks;
-					$("#mydownloads").append(div);
-					$(div).find(".downloadprogressbar").progressBar(item.progress, { showText: false, boxImage: 'progressbar.gif', barImage: 'progressbg_red.gif'});
-				}
-			});
-			$.each(downloads, function (i, item) {
-				if ($("div[rowdownid=" + escapestring(item.videoid) + "]").length > 0) {
-					$("div[rowdownid=" + escapestring(item.videoid) + "]").find(".downloadprogressbar").progressBar(item.progress);
-				} else {
-					var rowtitle = '<div class="title">' + item.title + '</div>';
-					var rowprogress = '<div class="progress"><div class="downloadprogressbar"></div></div>';
-					var rowdelete = "<div class='delete'><a class='deletebutton' href='#' title='delete' onclick=\"deleteDownload('" + item.provider + "', '" + item.videoid + "')\"><span>delete</span></a></div>";
-					var downloadurl = item.provider + "/download.caml?downloadid=" + item.videoid;
-					var rowdownload = "<div class='save'><a class='savebutton' title='download' href=\"" + downloadurl + "\"><span>save</span></a></div>";
-					var vlcplayback = "";
-					if (isplayerinstalled) { 
-						vlcplayback = "<div class='play'><a class='playbutton' title='play' href='#' onclick=\"ajaxrequest('play.caml?playurl=http://" + window.location.host + "/" + item.provider + "/" + item.provider + ".caml?videoid=" + item.videoid + "')\"><span>play</span></a></div>";
-					} 
-					var link = "";
-					if (item.provider == "megavideo") {
-						link = "http://megavideo.com/?v=" + item.videoid;
-					} else if (item.provider == "videobb") {
-						link = "http://videobb.com/video/" + item.videoid;
-					} else if (item.provider == "videozer") {
-						link = "http://videozer.com/video/" + item.videoid;
-					} else if (item.provider == "mixture") {
-						link = "http://mixturecloud.com/video=" + item.videoid;
-					}
-					var rowlinks = "<div class='linkdisplay' style='display:none'><input name=\"link\" id=\"link\" value=\"" + link + "\" size=\"80\"></input></div>";
-					var showlink = "<div class='showlink'><a href='#' onclick=\"toggleLink(event, this)\"><span>" + langstrings[lang]['showlink'] + "</span></a></div>";
-					var div = document.createElement("div"); // obligé de créer un objet dans le DOM pour que la progressbar fonctionne
-					div.className = "row";
-					div.setAttribute('rowdownid', item.videoid);
-					div.setAttribute("colspan", "4");
-					div.innerHTML = rowtitle + rowprogress + rowdelete + vlcplayback + rowdownload + showlink + rowlinks;
-					$("#mydownloads").append(div);
-					$(div).find(".downloadprogressbar").progressBar(item.progress, { showText: false, boxImage: 'progressbar.gif', barImage: 'progressbg_red.gif'});
-				}
-			});
-			
-			if (downloads.length + filedownloads.length == 0) {
-				$("#downloads").hide();
-			}
-		}
+
 		
 		/** 
 		  this function adds an upload with its details to the myuploads list
@@ -649,13 +567,6 @@
 			
 		}
 		
-		function getdownloads() {
-			$.ajax({
-				url: "downloads",
-				dataType: "xml",
-				success: parseXMLdownloads
-			});
-		}		
 		function getcurrentuploads() {
 			$.ajax({
 				url: "uploads",
@@ -935,87 +846,7 @@
 		});
 		
 		
-		
-		
-		
-		/**
-		  functions to update cacaoweb status and show errors
-		*/
-		
-		var dhtnetworkstatus;
-		var tcpnattype;
-		
-		function updatestatus() {
-			var erroricon = "<a href='index.html' data-icon='&#9888' class='button pink back glass icon'>Warning</a>";
-			if (dhtnetworkstatus == 'NATNotCone') {
-				$("#cacaowebstatus").html(erroricon + langstrings[lang]['natnotcone']);
-			} else if (dhtnetworkstatus == 'DHTNotConnected') {
-				$("#cacaowebstatus").html(erroricon + langstrings[lang]['notconnected']);
-			} else if (tcpnattype == 'Bad') {
-				$("#cacaowebstatus").html(erroricon + langstrings[lang]['natnotp2pfriendly']);
-			} else {
-				$("#cacaowebstatus").html(langstrings[lang]['workingfine']);
-			}
-		}
-		
-		
-		/* chain of ajax calls to update anything (i'm trying as a chain because it doesn't work properly) */
-		function checkNetwork() {
-			$.ajax({
-				url: "getdhtnetworkstatus",
-				dataType: "xml",
-				success: function(xml) {
-					$(xml).find("results").each(function() {
-						dhtnetworkstatus = $(this).text();
-						updatestatus();
-					});
-					getdownloads();
-					getcurrentuploads();
-				},error: function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("local error in ajax request");
-				} 
-			});
-		}
-		function checkNAT() {
-			$.ajax({
-				url: "gettcpnattype",
-				dataType: "xml",
-				success: function(xml) {
-					$(xml).find("results").each(function() {
-						tcpnattype = $(this).text();
-					});
-					checkNetwork()
-				}
-			});
-		}
-		function checkCacaoReplication() {
-			$.ajax({
-				url: "replicationactivated",
-				dataType: "xml",
-				success: function(xml) {
-					$(xml).find("results").each(function() {
-						if ($(this).text() == "true") {
-							$('#upload-tabs').show();
-						} else {
-							$('#upload-tabs').hide();
-							$('#h2newupload').html("The upload service is currently offline for maintenance. It will be back soon.");
-						}
-					});
-					checkNAT()
-				}
-			});
-			
-			// TODO: il faudrait ajouter un call pour errors
-
-		}
-		
-		
-		getdownloads();
 		getcurrentuploads();
-		checkCacaoReplication();
-		setInterval('checkCacaoReplication()', 2000);
-		
-		
 		
 		function hidealltabs() {
 			$("#dashboard").hide();
