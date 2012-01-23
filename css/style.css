@@ -99,8 +99,14 @@ h2 {
 
 
  
-
-
+#leftcolumn {
+	width: 150px;
+	height:500px;
+	float:left;
+}
+#maincontent {
+	float:left;
+}
 
 /* Upload */
 
@@ -108,22 +114,30 @@ h2 {
 	width: 550px;
 }
 
+#filesmanagergrid {
+	padding-top: 20px;
+}
 
 
+/* Meta fields */
+
+.contenttypediv, .contenttypediv label, .languagediv label {
+	float:left;
+	padding-right:10px;
+}
+.filemeta label {
+	display: block;
+	float: left;
+	width: 80px;
+	margin: 0 10px 0 0;
+	padding: 0;
+	text-align: right;
+}
 
 
-
-
-
-
-
-/** 
-  page Admin 
- 
-  */
   
 .clear {
-	clear: left;
+	clear: both;
 }
 .hidden {
 	display: none;
@@ -196,30 +210,7 @@ div.linkdisplay { clear:left; padding-left: 5px; padding-top: 3px; }
 }
 
 
-#mainleftcolumn {
-	float: left;
-	width: 530px;
-}
-#mainrightcolumn {
-	float: right;
-	margin-top: 30px;
-}
 
-
-#uploadslistnavigation {
-	clear: left;
-}
-#uploadslistnext a {
-	float: right;
-	padding-right: 50px;
-}
-#uploadslistprevious a {
-	float: left;
-	padding-left: 10px;
-}
-#uploadslistnext a, #uploadslistprevious a {
-	color: #fff;
-}
 
 #uploadviewsstatistics {
 	margin-bottom: 10px;
@@ -230,8 +221,3 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 fieldset { padding:0; border:0; margin-top:25px; }
 .ui-dialog .ui-state-error { padding: .3em; }
 .validateTips { border: 1px solid transparent; padding: 0.3em; }
-		
-/**
-  end page Admin 
-  
-  */

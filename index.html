@@ -21,7 +21,7 @@
 	<div class="container alogin">
 		<div class="wrapper">
 			<div class="content">
-			
+				
 				<div class="header">
 					<div class="header_top">
 						<div class="logo"><a href="./"><img src="img/logo.png"/></a>
@@ -40,10 +40,17 @@
 						<button id="redeemtab_btn">Redeem</button>
 						<button id="earningstab_btn">Earnings</button>
 						<button id="statisticstab_btn">Statistics</button>
-						<button id="videomanagertab_btn">Video Manager</button>
+						<button id="videomanagertab_btn">Files Manager</button>
 					</div>
 					<!--- End of Nav links --->
 				</div>
+				
+				<div class="clear"></div>
+				
+				<div id="leftcolumn">
+				</div>
+				
+				<div id="maincontent">
 				
 				<div id="dashboard">
 					<div class="authbox" style="display:none">
@@ -194,10 +201,10 @@
 								</p>
 							</div>
 						</div>
-						<div class="filemeta">
+						<div id="metadatachanger" class="filemeta">
 							<h3 id="uploadmeta"></h3>
 							<div class="meta-fields">
-								<p>
+								<div class="contenttypediv">
 									<label for="contenttype" id='smallcontenttype'><small></small></label>
 									<select id="contenttype">
 										<option value="" id="blank"></option>
@@ -208,8 +215,8 @@
 										<option value="music" id="music"></option>
 										<option value="file" id="filecategory"></option>
 									</select>
-								</p>
-								<p>
+								</div>
+								<div class="languagediv">
 									<label for="language" id="smalllanguage"></label>
 									<select id="language">
 										<option value=""></option>
@@ -228,8 +235,12 @@
 										<option value="jp">日本</option>
 										<option value="vn">Việt</option>
 									</select>
-								</p>
-								<p>
+								</div>
+								<div id="titlefield">
+									<label for="title" id="smalltitle"></label>
+									<input type="text" name="title" id="title" tabindex="2" size="50" />
+								</div>
+								<div>
 									<label for="subtitles" id="smallsubtitles"></label>
 									<select id="subtitles">
 										<option value=""></option>
@@ -248,11 +259,7 @@
 										<option value="jp">日本</option>
 										<option value="vn">Việt</option>
 									</select>
-								</p>
-								<p id="titlefield">
-									<label for="title" id="smalltitle"></label>
-									<input type="text" name="title" id="title" tabindex="2" size="50" />
-								</p>
+								</div>
 								<div id="yeardetails" style="display:none">
 									<p>
 										<label for="year" id="smallyear"></label>
@@ -301,25 +308,10 @@
 				
 				<!--- Video Manager --->
 				<div id="videomanager" style="display:none">
-				
-					<table id="list1"></table>
-					<div id="pager1"></div>
-					
-					<div id="downloads">
-						<h2 id="h2mydownloads"></h2>
-						<div id="mydownloads"></div>
-					</div>
-				
-					<div id="uploads">
-						<h2 id="h2myuploads"></h2>
-						<div id="uploadviewsstatistics">
-						</div>
-						<div id="myuploads" class="myuploads">
-						</div>
-						<div id="uploadslistnavigation">
-							<div id="uploadslistprevious" style="display:none"><a href="#">< Back</a></div>
-							<div id="uploadslistnext" style="display:none"><a href="#">Next ></a></div>
-						</div>
+					<!--- jqGrid placeholder --->
+					<div id="filesmanagergrid">
+						<table id="list1"></table>
+						<div id="pager1"></div>
 					</div>
 					
 
@@ -327,15 +319,10 @@
 				<!--- End Video Manager --->
 				
 				
+				</div>
 				
 			</div>
-				
-				
-		
-			
-
-	</div>
-	</div>
+		</div>
 	</div>	
 
 	
@@ -369,8 +356,6 @@
 		*/
 		
 		//document.getElementsByTagName('title').item(0).innerHTML = langstrings[lang]['cacaowebadmin'];
-		document.getElementById('h2mydownloads').innerHTML = langstrings[lang]['mydownloads'];
-		document.getElementById('h2myuploads').innerHTML = langstrings[lang]['myuploads'];
 		document.getElementById('h2newupload').innerHTML = langstrings[lang]['newupload'];
 		document.getElementById('examplesupload').innerHTML = langstrings[lang]['examples'];
 		document.getElementById('smallupload').innerHTML = langstrings[lang]['smallupload'];
@@ -410,29 +395,38 @@
 	</script>
 	
 
-	<script type="text/javascript"> 
+	<script> 
 		jQuery().ready(function (){
+			var lastsel;
 			jQuery("#list1").jqGrid({
-				url:'server.php?q=1',
-				datatype: "xml",
-				colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+				url:'getuploadsjson.php',
+				datatype: "json",
+				colNames:[ ' ', 'Title', 'Date', 'Length', 'Paid file', 'Price'],
 				colModel:[
-					{name:'id',index:'id', width:75},
-					{name:'invdate',index:'invdate', width:90},
-					{name:'name',index:'name', width:100},
-					{name:'amount',index:'amount', width:80, align:"right"},
-					{name:'tax',index:'tax', width:80, align:"right"},		
-					{name:'total',index:'total', width:80,align:"right"},		
-					{name:'note',index:'note', width:150, sortable:false}		
-				],
+					{name: 'myac', width:80, fixed:true, sortable:false, resize:false, formatter:'actions',formatoptions:{keys:true}},
+					{name:'title',index:'title', width:200 },
+					{name:'datecreated',index:'datecreated', width:90 },
+					{name:'length',index:'length', width:60, align:"right", sortable:false },
+					{name:'paidfile',index:'paidfile', width:60, align:"center",formatter: 'checkbox' },
+					{name:'price',index:'price', width:60, align:"right", editable:true }
+					],
 				rowNum:10,
 				autowidth: true,
 				rowList:[10,20,30],
 				pager: jQuery('#pager1'),
-				sortname: 'id',
+				sortname: 'datecreated',
+				width: 700,
+				height: "100%",
 				viewrecords: true,
 				sortorder: "desc",
-				caption:"XML Example"
+				caption:"My Files",
+				onSelectRow: function(id){
+					if (id != lastsel) {
+						populateMetaFields(id);
+						lastsel = id;
+					}
+				},
+				editurl : 'updatedata.php'
 			}).navGrid('#pager1',{edit:false,add:false,del:false});
 		});
 	</script> 
@@ -637,7 +631,7 @@
 		}
 		function getalluploads(pos) {
 			currentuploadposition = pos;
-			includeScript('http://uploads.cacaoweb.org/getuploads.php?pos=' + pos, 'getuploadscript');
+			includeScript('http://localhost/user/getuploads.php?pos=' + pos, 'getuploadscript');
 		}
 		function uploadcallback() {
 			getalluploads(currentuploadposition);
@@ -646,11 +640,24 @@
 		
 		$(function () {
 			/** callback is isloggedincallback(isloggedin, username, money) */
-			includeScript('http://uploads.cacaoweb.org/isloggedin.php', 'isloggedinscript');
-			getalluploads(0);
+			//includeScript('http://localhost/user/isloggedin.php', 'isloggedinscript');
+			//getalluploads(0);
 		});
 	
 		
+		
+		/**
+		  Files Manager
+		*/
+		
+		function populateMetaFields(id) {
+			$.ajax({
+				url: "getuploaddetails.php?id=" + id,
+				success: function(details) {
+					alert(details.fileid);
+				}
+			});
+		}
 		
 		
 		
@@ -692,7 +699,7 @@
 							} else {
 								/* we upload the metadata of the file to the central server so these metadata can be incorporated in cacaoweb search engine */
 								var actionstring = "fileid=" + fileid + "&contenttype=" + $('#contenttype').val() + '&language=' + $('#language').val() + '&subtitles=' + $('#subtitles').val() + '&title=' + encodeURIComponent($('#title').val()) + '&season=' + $('#season').val() + '&episode=' + $('#episode').val() + '&year=' + $('#year').val() + '&numberofcredits=' + $('#numberofcredits').val();
-								includeScript('http://uploads.cacaoweb.org/upload.php?' + actionstring, 'upload');
+								includeScript('http://localhost/user/upload.php?' + actionstring, 'upload');
 							}
 						}
 					});	
@@ -706,7 +713,7 @@
 					var pos1 = url.indexOf('v=');
 					var megavideoid = url.substr(pos1 + 2);
 					var actionstring = "providertype=0&videoid=" + megavideoid + "&contenttype=" + $('#contenttype').val() + '&language=' + $('#language').val() + '&subtitles=' + $('#subtitles').val() + '&title=' + encodeURIComponent($('#title').val()) + '&season=' + $('#season').val() + '&episode=' + $('#episode').val() + '&year=' + $('#year').val();
-					includeScript('http://uploads.cacaoweb.org/upload.php?' + actionstring, 'upload');
+					includeScript('http://localhost/user/upload.php?' + actionstring, 'upload');
 					$.ajax({
 						url: "remoteupload?provider=0&videoid=" + megavideoid,
 						success: function(data) {}
@@ -715,7 +722,7 @@
 					var pos1 = url.lastIndexOf('/');
 					var videobbid = url.substr(pos1 + 1);
 					var actionstring = "providertype=1&videoid=" + videobbid + "&contenttype=" + $('#contenttype').val() + '&language=' + $('#language').val() + '&subtitles=' + $('#subtitles').val() + '&title=' + encodeURIComponent($('#title').val()) + '&season=' + $('#season').val() + '&episode=' + $('#episode').val() + '&year=' + $('#year').val();
-					includeScript('http://uploads.cacaoweb.org/upload.php?' + actionstring, 'upload');
+					includeScript('http://localhost/user/upload.php?' + actionstring, 'upload');
 					$.ajax({
 						url: "remoteupload?provider=1&videoid=" + videobbid,
 						success: function(data) {}
@@ -724,7 +731,7 @@
 					var pos1 = url.lastIndexOf('/');
 					var videozerid = url.substr(pos1 + 1);
 					var actionstring = "providertype=2&videoid=" + videobbid + "&contenttype=" + $('#contenttype').val() + '&language=' + $('#language').val() + '&subtitles=' + $('#subtitles').val() + '&title=' + encodeURIComponent($('#title').val()) + '&season=' + $('#season').val() + '&episode=' + $('#episode').val() + '&year=' + $('#year').val();
-					includeScript('http://uploads.cacaoweb.org/upload.php?' + actionstring, 'upload');
+					includeScript('http://localhost/user/upload.php?' + actionstring, 'upload');
 					$.ajax({
 						url: "remoteupload?provider=2&videoid=" + videozerid,
 						success: function(data) {}
@@ -733,7 +740,7 @@
 					var pos1 = url.lastIndexOf('=');
 					var videozerid = url.substr(pos1 + 1);
 					var actionstring = "providertype=3&videoid=" + videobbid + "&contenttype=" + $('#contenttype').val() + '&language=' + $('#language').val() + '&subtitles=' + $('#subtitles').val() + '&title=' + encodeURIComponent($('#title').val()) + '&season=' + $('#season').val() + '&episode=' + $('#episode').val() + '&year=' + $('#year').val();
-					includeScript('http://uploads.cacaoweb.org/upload.php?' + actionstring, 'upload');
+					includeScript('http://localhost/user/upload.php?' + actionstring, 'upload');
 					$.ajax({
 						url: "remoteupload?provider=3&videoid=" + videozerid,
 						success: function(data) {}
@@ -747,7 +754,7 @@
 			} else if (selectedtab == 2) { // Metadata upload for previously uploaded files through ftp
 				/* we upload the metadata of the file to the central server so these metadata can be incorporated in cacaoweb search engine */
 				var actionstring = "filelink=" + $('#filelink').val() + "&contenttype=" + $('#contenttype').val() + '&language=' + $('#language').val() + '&subtitles=' + $('#subtitles').val() + '&title=' + encodeURIComponent($('#title').val()) + '&season=' + $('#season').val() + '&episode=' + $('#episode').val() + '&year=' + $('#year').val() + '&numberofcredits=' + $('#numberofcreditsftp').val();
-				includeScript('http://uploads.cacaoweb.org/upload.php?' + actionstring, 'upload');
+				includeScript('http://localhost/user/upload.php?' + actionstring, 'upload');
 			}
 		}
 			
@@ -788,7 +795,7 @@
 					$('#addashow').html(langstrings[lang]['addashow']);
 					$('#addashow').show();
 					/* calls back getshowscallback() */
-					includeScript('http://uploads.cacaoweb.org/getshows.php?lang=' + contentlang, 'getshows');
+					includeScript('http://localhost/user/getshows.php?lang=' + contentlang, 'getshows');
 				} else {
 					$('#title').remove();
 					$('#addashow').hide();
@@ -865,11 +872,17 @@
 		$("#upload-tabs").tabs();
 		
 		$("#dashboardtab_btn").click(function() { hidealltabs(); $("#dashboard").show(); });
-		$("#uploadtab_btn").click(function() { hidealltabs(); $("#upload").show(); });
+		$("#uploadtab_btn").click(function() { 
+			hidealltabs(); $("#upload").show();
+			$("#metadatachanger").appendTo("#upload-tabs");
+		});
 		$("#redeemtab_btn").click(function() { hidealltabs(); $("#redeem").show(); });
 		$("#earningstab_btn").click(function() { hidealltabs(); $("#earnings").show(); });
 		$("#statisticstab_btn").click(function() { hidealltabs(); $("#statistics").show(); });
-		$("#videomanagertab_btn").click(function() { hidealltabs(); $("#videomanager").show(); });
+		$("#videomanagertab_btn").click(function() { 
+			hidealltabs(); $("#videomanager").show();
+			$("#metadatachanger").appendTo("#videomanager");
+		});
 		
 		
 
@@ -974,7 +987,7 @@
 					bValid = bValid && checkRegexp($("#email"),/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. albert@ducon.com");
 					bValid = bValid && checkRegexp($("#registerpassword"), /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9");
 					if (bValid) {
-						includeScript('http://uploads.cacaoweb.org/register.php?' + "username=" + $("#registername").val() + "&password=" + $("#registerpassword").val() + "&email=" + $("#email").val(), 'registerscript');
+						includeScript('http://localhost/user/register.php?' + "username=" + $("#registername").val() + "&password=" + $("#registerpassword").val() + "&email=" + $("#email").val(), 'registerscript');
 						username = $("#registername").val();
 						currentauthdialog = $(this);
 					}
@@ -996,7 +1009,7 @@
 			buttons: {
 				'Login': function() {
 					$("#loginname").removeClass('ui-state-error');
-					includeScript('http://uploads.cacaoweb.org/login.php?' + "username=" + $("#loginname").val() + "&password=" + $("#loginpassword").val(), 'loginscript');
+					includeScript('http://localhost/user/login.php?' + "username=" + $("#loginname").val() + "&password=" + $("#loginpassword").val(), 'loginscript');
 					username = $("#loginname").val();
 					currentauthdialog = $(this);
 				},
@@ -1027,7 +1040,7 @@
 			if (result == 1) {
 				getalluploads();
 				currentauthdialog.dialog('close');
-				includeScript('http://uploads.cacaoweb.org/isloggedin.php', 'isloggedinscript');
+				includeScript('http://localhost/user/isloggedin.php', 'isloggedinscript');
 			} else {
 				$("#loginname").addClass('ui-state-error');
 				$("#validateTipsLogin").text('Username or password is wrong').addClass('ui-state-highlight');
